@@ -102,12 +102,12 @@ void loop() {
 }
 
 void checkFields() {
-  for(int a = 0; a < (SIZEMinusOne); a++) {
-    for(int b = 0; b < (SIZEMinusOne); b++) {
+  for(int a = 0; a < SIZEMinusOne; a++) {
+    for(int b = 0; b < SIZEMinusOne; b++) {
       
       int around = 0;
       if (connectionsHorizontily[a][b]->isConnected()) around++;
-      if (connectionsHorizontily[a][b + 1]->isConnected()) around++;
+      if (b < SIZEMinusOne -1 && connectionsHorizontily[a][b + 1]->isConnected()) around++;
       if (connectionsVerticaly[a][b]->isConnected()) around++;
       if (a > 0 && connectionsVerticaly[a - 1][b]->isConnected()) around++;
 
