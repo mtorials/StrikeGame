@@ -195,12 +195,12 @@ void checkButtonMatrix() {
 
 void printConnectionMatrix() {
 
-  for (int row = 0; row < (SIZEMinusOne); row++) {
+  for (int row = 0; row < SIZEMinusOne; row++) {
 
       Serial.print(row);
       Serial.print("(V): ");
 
-      for (int col = 0; col < (SIZEMinusOne); col++) {
+      for (int col = 0; col < SIZEMinusOne; col++) {
 
         Serial.print(connectionsVerticaly[row][col]->isConnected());
         Serial.print(", ");
@@ -209,12 +209,12 @@ void printConnectionMatrix() {
       }
       Serial.println(";");
   }
-  for (int row = 0; row < (SIZEMinusOne); row++) {
+  for (int row = 0; row < SIZEMinusOne; row++) {
     
       Serial.print(row);
       Serial.print("(H): ");
 
-      for (int col = 0; col < (SIZEMinusOne); col++) {
+      for (int col = 0; col < SIZEMinusOne; col++) {
 
         Serial.print(connectionsHorizontily[row][col]->isConnected());
         Serial.print(", ");
