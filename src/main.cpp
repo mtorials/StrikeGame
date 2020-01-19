@@ -1,8 +1,8 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
-#include <Connection.h>
-#include <Field.h>
+#include "Connection.hpp"
+#include "Field.hpp"
 
 #define NUM_LEDS 98
 #define NUM_LEDS_FIELDS 49
@@ -104,7 +104,7 @@ void checkFields() {
       if (connectionsHorizontily[a][b]->isConnected()) around++;
       if (connectionsHorizontily[a][b + 1]->isConnected()) around++;
       if (connectionsVerticaly[a][b]->isConnected()) around++;
-      if (connectionsVerticaly[a - 1][b]->isConnected()) around++;
+      if (a > 0 && connectionsVerticaly[a - 1][b]->isConnected()) around++;
 
       if (DEBUGFIELDS) {
 
