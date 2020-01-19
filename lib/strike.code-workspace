@@ -1,0 +1,13 @@
+{
+	"folders": [
+		{
+			"path": "C:\\Users\\matti\\Documents\\PlatformIO\\Projects\\Strike"
+		}
+	],
+	"settings": {
+		"terminal.integrated.env.windows": {
+			"PATH": "C:\\Users\\matti\\.platformio\\penv\\Scripts;C:\\Users\\matti\\.platformio\\penv;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Users\\matti\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\matti\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\matti\\AppData\\Roaming\\npm;C:\\Users\\matti\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Program Files (x86)\\Nmap;C:\\ProgramData\\DockerDesktop\\version-bin;C:\\Program Files\\Docker\\Docker\\Resources\\bin;C:\\Program Files (x86)\\Common Files\\Oracle\\Java\\javapath;C:\\WINDOWS\\system32;C:\\WINDOWS;C:\\WINDOWS\\System32\\Wbem;C:\\WINDOWS\\System32\\WindowsPowerShell\\v1.0\\;C:\\WINDOWS\\System32\\OpenSSH\\;C:\\Program Files\\Git\\cmd;C:\\Program Files\\nodejs\\;C:\\xampp\\php;C:\\ProgramData\\ComposerSetup\\bin;C:\\Program Files\\PuTTY\\;C:\\Users\\matti\\AppData\\Local\\Microsoft\\WindowsApps;;C:\\Users\\matti\\AppData\\Local\\Programs\\Microsoft VS Code\\bin;C:\\Users\\matti\\AppData\\Roaming\\npm;C:\\Users\\matti\\AppData\\Roaming\\Composer\\vendor\\bin;C:\\Program Files (x86)\\Nmap",
+			"PLATFORMIO_CALLER": "vscode"
+		}
+	}
+}
