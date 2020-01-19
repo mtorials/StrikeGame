@@ -15,15 +15,15 @@
 #define DEBUGCONNECTIONMATRIX
 
 CRGB leds[NUM_LEDS];
-bool matrix[8][8];
+bool matrix[SIZE][SIZE];
 
-int pinoutRows[8] = {53, 51, 49, 47, 45, 43, 41, 39};
-int pinoutCols[8] = {38, 40, 42, 44, 46, 48, 50, 52};
+int pinoutRows[SIZE] = {53, 51, 49, 47, 45, 43, 41, 39};
+int pinoutCols[SIZE] = {38, 40, 42, 44, 46, 48, 50, 52};
 
 Connection * connectionsHorizontily[7][7];
 Connection * connectionsVerticaly[7][7];
 
-Field * fields[8][8];
+Field * fields[SIZE][SIZE];
 
 void checkButtonMatrix();
 bool checkAround(int a, int b);
