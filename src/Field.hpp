@@ -1,6 +1,4 @@
-#ifndef mds_field
-#define mds_field
-
+#pragma once
 #include <FastLED.h>
 
 class Field {
@@ -13,23 +11,12 @@ public:
         P1 = CRGB::Blue,
         P2 = CRGB::Red
     };
+
     Field(CRGB * led);
     void update(State newState);
-    State getState() { return this->state; };
+    State getState();
 private:
     State state = OFF;
     CRGB * led;
 };
 
-Field::Field(CRGB * led) {
-
-    this->led = led;
-};
-
-void Field::update(State newState) {
-
-    this->led->setColorCode(newState);
-    this->state = newState;
-};
-
-#endif

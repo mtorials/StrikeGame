@@ -1,28 +1,29 @@
 #include <Arduino.h>
 #include <FastLED.h>
 
-#include <Connection.h>
-#include <Field.h>
+#include "Connection.hpp"
+#include "Field.hpp"
 
 #define NUM_LEDS 98
 #define NUM_LEDS_FIELDS 49
 #define SIZE 8
+#define SIZEMinusOne SIZE - 1
 
-#define DEBUGMATRIX false
-#define DEBUGCONNECTIONS false
-#define DEBUGFIELDS false
-#define DEBUGCONNECTIONMATRIX true
+#define DEBUGMATRIX 
+#define DEBUGCONNECTIONS
+#define DEBUGFIELDS
+#define DEBUGCONNECTIONMATRIX
 
 CRGB leds[NUM_LEDS];
-bool matrix[8][8];
+bool matrix[SIZE][SIZE];
 
-int pinoutRows[8] = {53, 51, 49, 47, 45, 43, 41, 39};
-int pinoutCols[8] = {38, 40, 42, 44, 46, 48, 50, 52};
+int pinoutRows[SIZE] = {53, 51, 49, 47, 45, 43, 41, 39};
+int pinoutCols[SIZE] = {38, 40, 42, 44, 46, 48, 50, 52};
 
 Connection * connectionsHorizontily[7][7];
 Connection * connectionsVerticaly[7][7];
 
-Field * fields[8][8];
+Field * fields[SIZE][SIZE];
 
 void checkButtonMatrix();
 bool checkAround(int a, int b);
@@ -50,15 +51,15 @@ void setup() {
   
   // Map LEDs to Connection (or without LEDs use default constructor)
   for (int i = 0; i < NUM_LEDS / 2; i++) {
-    int a = (int)i / (SIZE - 1);
-    int b = i % (SIZE - 1);
+    int a = (int)i / (SIZEMinusOne);
+    int b = i % (SIZEMinusOne);
     connectionsHorizontily[a][b] = new Connection();
     connectionsVerticaly[a][b] = new Connection();
   }
 
   for (int i = 0; i < NUM_LEDS_FIELDS; i++) {
-    int a = (int)(i / (SIZE - 1));
-    int b = i % (SIZE - 1);
+    int a = (int)(i / (SIZEMinusOne));
+    int b = i % (SIZEMinusOne);
     if ((a % 2) == 1) {
       fields[a][abs(b - 6)] = new Field(&leds[i]);
     } else {
@@ -80,10 +81,12 @@ void loop() {
     }
   }
 
-  if (DEBUGCONNECTIONMATRIX && i > 100) {
+#ifdef DEBUGCONNECTIONMATRIX
+  if (i > 100) {
     printConnectionMatrix();
     i = 0;
   }
+#endif
 
   if (change) {
 
@@ -93,27 +96,29 @@ void loop() {
   FastLED.show();
   
   i++;
-  if (DEBUGMATRIX) delay(1000);
+#ifdef DEBUGMATRIX
+  delay(1000);
+#endif
 }
 
 void checkFields() {
-  for(int a = 0; a < (SIZE - 1); a++) {
-    for(int b = 0; b < (SIZE - 1); b++) {
+  for(int a = 0; a < SIZEMinusOne; a++) {
+    for(int b = 0; b < SIZEMinusOne; b++) {
       
       int around = 0;
       if (connectionsHorizontily[a][b]->isConnected()) around++;
-      if (connectionsHorizontily[a][b + 1]->isConnected()) around++;
+      if (b < SIZEMinusOne -1 && connectionsHorizontily[a][b + 1]->isConnected()) around++;
       if (connectionsVerticaly[a][b]->isConnected()) around++;
-      if (connectionsVerticaly[a - 1][b]->isConnected()) around++;
+      if (a > 0 && connectionsVerticaly[a - 1][b]->isConnected()) around++;
 
-      if (DEBUGFIELDS) {
 
+#ifdef DEBUGFIELDS
         Serial.print(a);
         Serial.print("; ");
         Serial.print(b);
         Serial.print(": ");
         Serial.println(around);
-      }
+#endif
 
       Field::State newState;
 
@@ -136,14 +141,18 @@ bool checkAround(int a, int b) {
   // If not pressed: return
   if (!matrix[a][b]) return false;
   
-  if (DEBUGCONNECTIONS) Serial.print(a);
-  if (DEBUGCONNECTIONS) Serial.print(" ");
-  if (DEBUGCONNECTIONS) Serial.println(b);
+#ifdef DEBUGCONNECTIONS
+  Serial.print(a);
+  Serial.print(" ");
+  Serial.println(b);
+#endif
 
   // Check the buttons around it and connect Connection
   if (matrix[a + 1][b]) {
 
-    if (DEBUGCONNECTIONS) Serial.println("Connected!");
+#ifdef DEBUGCONNECTIONS
+    Serial.println("Connected!");
+#endif
 
     connectionsHorizontily[a][b]->connect();
     return true;
@@ -163,29 +172,35 @@ void checkButtonMatrix() {
   	pinMode(pinoutRows[row], OUTPUT);
     digitalWrite(pinoutRows[row], LOW);
 
-    if (DEBUGMATRIX) Serial.print(row);
-    if (DEBUGMATRIX) Serial.print(": ");
+#ifdef DEBUGMATRIX
+    Serial.print(row);
+    Serial.print(": ");
+#endif
 
     for (int col = 0; col < SIZE; col++) {
 
-      if (DEBUGMATRIX) Serial.print(!digitalRead(pinoutCols[col]));
-      if (DEBUGMATRIX) Serial.print(", ");
+#ifdef DEBUGMATRIX
+      Serial.print(!digitalRead(pinoutCols[col]));
+      Serial.print(", ");
+#endif
 
       matrix[row][col] = !digitalRead(pinoutCols[col]);
     }
-    if (DEBUGMATRIX) Serial.println(";");
+#ifdef DEBUGMATRIX
+    Serial.println(";");
+#endif
     pinMode(pinoutRows[row], INPUT);
   }
 }
 
 void printConnectionMatrix() {
 
-  for (int row = 0; row < (SIZE - 1); row++) {
+  for (int row = 0; row < SIZEMinusOne; row++) {
 
       Serial.print(row);
       Serial.print("(V): ");
 
-      for (int col = 0; col < (SIZE - 1); col++) {
+      for (int col = 0; col < SIZEMinusOne; col++) {
 
         Serial.print(connectionsVerticaly[row][col]->isConnected());
         Serial.print(", ");
@@ -194,12 +209,12 @@ void printConnectionMatrix() {
       }
       Serial.println(";");
   }
-  for (int row = 0; row < (SIZE - 1); row++) {
+  for (int row = 0; row < SIZEMinusOne; row++) {
     
       Serial.print(row);
       Serial.print("(H): ");
 
-      for (int col = 0; col < (SIZE - 1); col++) {
+      for (int col = 0; col < SIZEMinusOne; col++) {
 
         Serial.print(connectionsHorizontily[row][col]->isConnected());
         Serial.print(", ");
